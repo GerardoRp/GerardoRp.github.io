@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://gerardorp.github.io/sitemap.xml
