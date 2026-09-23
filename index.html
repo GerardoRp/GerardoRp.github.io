@@ -1,4 +1,5 @@
 <!doctype html>
+<!-- BUILD: GERARDO-PORTFOLIO-FINAL-V5.1-2026-09-23 -->
 <html lang="es" class="no-js">
 <head>
 <meta charset="utf-8" />
@@ -22,7 +23,25 @@ a{color:inherit;text-decoration:none} button{font:inherit;color:inherit} ::selec
 .section{padding:120px 0} .section-grid{display:grid;grid-template-columns:repeat(12,1fr);gap:20px}
 header{position:relative;z-index:20;display:flex;justify-content:space-between;align-items:center;padding:22px 0 18px;font-size:12px;letter-spacing:.13em;text-transform:uppercase}
 header nav{display:flex;gap:28px} header a{position:relative} header a:after{content:"";position:absolute;left:0;right:100%;bottom:-5px;height:1px;background:currentColor;transition:right .3s var(--ease)} header a:hover:after{right:0}
-[data-reveal]{clip-path:inset(0 0 100% 0);transform:translateY(24px);transition:clip-path .85s var(--ease),transform .85s var(--ease)} [data-reveal].in{clip-path:inset(0);transform:none}
+[data-reveal]{clip-path:none;transform:none;opacity:1}
+
+/* Safe motion system:
+   content is always visible; modern browsers animate position as it enters.
+   Capture tools / unsupported browsers simply show the final state. */
+@keyframes safeReveal{
+  from{transform:translateY(30px) scale(.997)}
+  to{transform:translateY(0) scale(1)}
+}
+
+
+/* Hero gets a crafted load animation, independent of scroll observers. */
+@keyframes heroRise{
+  from{transform:translateY(22px)}
+  to{transform:translateY(0)}
+}
+.hero .hero-kicker{animation:heroRise .72s var(--ease) .02s both}
+.hero .hero-title{animation:heroRise .9s var(--ease) .08s both}
+.hero .hero-meta{animation:heroRise .78s var(--ease) .18s both}
 [data-line]{position:relative} [data-line]:before{content:"";position:absolute;left:0;right:0;top:0;height:1px;background:currentColor;opacity:.22;transform:scaleX(0);transform-origin:left;transition:transform .85s var(--ease)} [data-line].in:before{transform:scaleX(1)}
 
 /* HERO — same visual grammar as the approved vanguard preview */
@@ -56,7 +75,9 @@ header nav{display:flex;gap:28px} header a{position:relative} header a:after{con
 
 /* METHOD — same editorial motion language */
 .method{padding:125px 0 145px;background:var(--white)} .method .tag{grid-column:1/3} .method-quote{grid-column:4/12;margin:0 0 72px;font-size:clamp(38px,4.4vw,68px);line-height:1.02;letter-spacing:-.038em;font-weight:500}
-.method-track{grid-column:4/13;position:relative} .method-line{position:absolute;left:0;right:0;top:17px;height:1px;background:var(--line);overflow:hidden} .method-line:after{content:"";position:absolute;left:0;top:0;bottom:0;width:var(--method-progress,0%);background:var(--accent)} .method-steps{display:grid;grid-template-columns:repeat(6,1fr);gap:16px} .step{position:relative;padding-top:42px} .step-dot{position:absolute;top:12px;left:0;width:11px;height:11px;border-radius:50%;background:var(--white);border:1.5px solid var(--ink);transition:.3s ease} .step.active .step-dot{background:var(--accent);border-color:var(--accent);transform:scale(1.15)} .step b{display:block;font-size:11px;letter-spacing:.11em;text-transform:uppercase;margin-bottom:10px} .step p{margin:0;color:var(--muted);font-size:12px;max-width:150px}
+.method-track{grid-column:4/13;position:relative;--method-progress:0%;--method-progress-scale:0}
+.method-line{position:absolute;left:0;right:0;top:17px;height:1px;background:var(--line);overflow:hidden}
+.method-line:after{content:"";position:absolute;left:0;top:0;bottom:0;width:100%;background:var(--accent);transform-origin:left;transform:scaleX(var(--method-progress-scale));transition:transform .08s linear;will-change:transform} .method-steps{display:grid;grid-template-columns:repeat(6,1fr);gap:16px} .step{position:relative;padding-top:42px} .step-dot{position:absolute;top:12px;left:0;width:11px;height:11px;border-radius:50%;background:var(--white);border:1.5px solid var(--ink);transition:.3s ease} .step.active .step-dot{background:var(--accent);border-color:var(--accent);transform:scale(1.15)} .step b{display:block;font-size:11px;letter-spacing:.11em;text-transform:uppercase;margin-bottom:10px} .step p{margin:0;color:var(--muted);font-size:12px;max-width:150px}
 
 /* SELECTED WORK INDEX */
 .work-index{padding:125px 0 110px} .work-index .tag{grid-column:1/3} .work-index h2{grid-column:4/12;margin:0;font:400 clamp(62px,8vw,126px)/.82 Georgia,serif;letter-spacing:-.055em}
@@ -64,8 +85,15 @@ header nav{display:flex;gap:28px} header a{position:relative} header a:after{con
 /* STAYFLOW / PROJECT ANATOMY */
 .anatomy{padding:50px 0 150px} .anatomy .tag{grid-column:1/3} .anatomy-title{grid-column:4/12;margin:0 0 30px;font:400 clamp(58px,7vw,112px)/.85 Georgia,serif;letter-spacing:-.055em} .project-lede{grid-column:4/10;margin:0 0 64px;color:var(--muted);font-size:15px;max-width:760px}
 .architecture{grid-column:4/13;display:grid;grid-template-columns:280px 1fr;gap:65px} .arch-side{font-size:13px;color:var(--muted)} .arch-side b{display:block;color:var(--ink);font-size:11px;letter-spacing:.12em;text-transform:uppercase;margin-bottom:12px} .arch-links{margin-top:20px;display:flex;gap:14px;flex-wrap:wrap} .arch-links a{font-size:10px;letter-spacing:.1em;text-transform:uppercase;border-bottom:1px solid var(--ink);padding-bottom:2px}
-.arch-flow{position:relative;padding:5px 0} .arch-line{position:absolute;left:18px;top:26px;bottom:26px;width:1px;background:var(--line);overflow:hidden} .arch-line:after{content:"";position:absolute;inset:0;background:var(--accent);transform-origin:top;transform:scaleY(0);transition:transform 1.6s var(--ease)} .arch-flow.in .arch-line:after{transform:scaleY(1)}
-.node{position:relative;display:grid;grid-template-columns:36px 1fr 1.15fr;gap:20px;align-items:start;padding:0 0 44px} .node:last-child{padding-bottom:0} .node-dot{width:10px;height:10px;border-radius:50%;background:var(--paper);border:1.5px solid var(--ink);margin:7px 0 0 13px;position:relative;z-index:2;transition:background .3s ease,border-color .3s ease,transform .3s ease} .node.in .node-dot{background:var(--accent);border-color:var(--accent);transform:scale(1.2)} .node h3{margin:0;font-size:25px;font-weight:500} .node p{margin:2px 0 0;color:var(--muted);font-size:13px}
+.arch-flow{position:relative;padding:5px 0;--arch-progress:0}
+.arch-line{position:absolute;left:18px;top:26px;bottom:26px;width:1px;background:var(--line);overflow:hidden}
+.arch-line:after{content:"";position:absolute;inset:0;background:var(--accent);transform-origin:top;transform:scaleY(var(--arch-progress));transition:transform .08s linear;will-change:transform}
+.node{position:relative;display:grid;grid-template-columns:36px 1fr 1.15fr;gap:20px;align-items:start;padding:0 0 44px}
+.node:last-child{padding-bottom:0}
+.node-dot{width:10px;height:10px;border-radius:50%;background:var(--paper);border:1.5px solid var(--ink);margin:7px 0 0 13px;position:relative;z-index:2;transition:background .3s ease,border-color .3s ease,transform .3s ease}
+.node.active .node-dot{background:var(--accent);border-color:var(--accent);transform:scale(1.2)}
+.node h3{transition:transform .35s var(--ease)}
+.node.active h3{transform:translateX(4px)} .node h3{margin:0;font-size:25px;font-weight:500} .node p{margin:2px 0 0;color:var(--muted);font-size:13px}
 
 /* RETAIL DATA PLAYGROUND — preserves the approved original format */
 .data-lab{padding:120px 0 140px;background:var(--white)} .data-lab .tag{grid-column:1/3} .data-intro{grid-column:4/12;display:flex;justify-content:space-between;align-items:end;gap:40px;margin-bottom:64px} .data-intro h2{margin:0;font:400 clamp(58px,7vw,116px)/.84 Georgia,serif;letter-spacing:-.05em} .data-intro p{max-width:360px;color:var(--muted);margin:0}
@@ -190,9 +218,9 @@ footer{background:var(--white);padding:28px 0 42px;border-top:1px solid var(--li
 .bi-line-legend .bi-legend-target{background:#989388;height:1px}
 #biLineSvg{width:100%;height:290px;overflow:hidden}
 .bi-gridline{stroke:#ddd7ca;stroke-width:1}
-.bi-target-path{fill:none;stroke:#989388;stroke-width:1.7;stroke-dasharray:5 5;vector-effect:non-scaling-stroke}
+.bi-target-path{fill:none;stroke:#989388;stroke-width:1.6;stroke-dasharray:6 7;stroke-linecap:round;vector-effect:non-scaling-stroke}
 .bi-area-path{fill:rgba(227,77,47,.09)}
-.bi-line-path{fill:none;stroke:var(--accent);stroke-width:2.8;stroke-linejoin:round;stroke-linecap:round;vector-effect:non-scaling-stroke}
+.bi-line-path{fill:none;stroke:var(--accent);stroke-width:2.7;stroke-linejoin:round;stroke-linecap:round;vector-effect:non-scaling-stroke}
 .bi-line-point{fill:#fbf8f1;stroke:var(--accent);stroke-width:2;vector-effect:non-scaling-stroke}
 .bi-axis{display:flex;justify-content:space-between;gap:8px;margin-top:4px;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
 .bi-donut-shell{display:grid;grid-template-columns:190px 1fr;gap:10px;align-items:center}
@@ -1007,7 +1035,7 @@ body.menu-open{overflow:hidden}
     width:1px;
     height:var(--method-progress,0%);
     background:var(--accent);
-    transition:height .18s linear;
+    transition:height .08s linear;
   }
   .method-line{display:none}
   .method-steps{
@@ -1281,8 +1309,7 @@ select:focus-visible{
 /* Final desktop balance: preserve the editorial offset, but use more of the canvas. */
 @media(min-width:1180px){
   .experience-head,.jobs{grid-column:3/13}
-  .tools-head{grid-column:3/12}
-  .tool-filter,.tool-list{grid-column:3/13}
+  .tools-head,.tool-filter,.tool-list{grid-column:2/12}
   .method-quote{grid-column:3/12}
   .method-track{grid-column:3/13}
   .work-index h2{grid-column:3/12}
@@ -1301,30 +1328,97 @@ select:focus-visible{
 }
 
 
-/* Panel-level motion: clipped rises and line movement, no generic opacity fade. */
-.js .bi-kpi,.js .bi-panel,.js .lab-item{
-  transform:translateY(18px);
-  clip-path:inset(10px 0 0 0);
-  transition:transform .72s var(--ease),clip-path .72s var(--ease);
+
+@media(min-width:1180px){
+  .tools .tool-row{
+    grid-template-columns:2fr 4.35fr 1.65fr;
+    column-gap:28px;
+  }
+  .tools .tool-context{
+    padding-right:6px;
+  }
 }
-.js .bi-kpi.in,.js .bi-panel.in,.js .lab-item.in{
-  transform:none;
-  clip-path:inset(0);
+
+
+/* =========================================================
+   SEMIFINAL V4 — ROBUST MOTION SYSTEM
+   Nothing is hidden before animation. IntersectionObserver
+   only triggers decorative movement, never content visibility.
+========================================================= */
+@keyframes motionLead{
+  0%{transform:translate3d(0,38px,0) scale(.992)}
+  100%{transform:translate3d(0,0,0) scale(1)}
 }
-.js .bi-kpi:nth-child(2){transition-delay:.06s}
-.js .bi-kpi:nth-child(3){transition-delay:.12s}
-.js .bi-kpi:nth-child(4){transition-delay:.18s}
-.js .bi-grid>.bi-panel:nth-child(2){transition-delay:.08s}
-.js .bi-grid>.bi-panel:nth-child(3){transition-delay:.13s}
-.js .bi-grid>.bi-panel:nth-child(4){transition-delay:.18s}
-.js .lab-item:nth-child(2){transition-delay:.07s}
-.js .lab-item:nth-child(3){transition-delay:.14s}
+@keyframes motionSupport{
+  0%{transform:translate3d(0,26px,0)}
+  100%{transform:translate3d(0,0,0)}
+}
+@keyframes motionRow{
+  0%{transform:translate3d(0,15px,0)}
+  100%{transform:translate3d(0,0,0)}
+}
+@keyframes motionTag{
+  0%{transform:translate3d(-18px,0,0)}
+  100%{transform:translate3d(0,0,0)}
+}
+@keyframes motionSide{
+  0%{transform:translate3d(18px,0,0)}
+  100%{transform:translate3d(0,0,0)}
+}
+
+.motion-lead.motion-in{
+  animation:motionLead .9s var(--ease) var(--motion-delay,0s) both;
+}
+.motion-support.motion-in{
+  animation:motionSupport .78s var(--ease) var(--motion-delay,0s) both;
+}
+.motion-row.motion-in{
+  animation:motionRow .62s var(--ease) var(--motion-delay,0s) both;
+}
+.motion-tag.motion-in{
+  animation:motionTag .66s var(--ease) var(--motion-delay,0s) both;
+}
+.motion-side.motion-in{
+  animation:motionSide .72s var(--ease) var(--motion-delay,0s) both;
+}
+
+/* Smooth hand-off: section divider lines draw as content arrives. */
+.motion-divider{
+  position:relative;
+}
+.motion-divider:after{
+  content:"";
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:-1px;
+  height:1px;
+  background:currentColor;
+  opacity:.16;
+  transform-origin:left;
+  transform:scaleX(.15);
+}
+.motion-divider.motion-in:after{
+  animation:dividerGrow .9s var(--ease) .08s both;
+}
+@keyframes dividerGrow{
+  from{transform:scaleX(.15)}
+  to{transform:scaleX(1)}
+}
 
 @media(prefers-reduced-motion:reduce){
-  .js .bi-kpi,.js .bi-panel,.js .lab-item{transform:none!important;clip-path:none!important}
+  .motion-lead.motion-in,
+  .motion-support.motion-in,
+  .motion-row.motion-in,
+  .motion-tag.motion-in,
+  .motion-side.motion-in,
+  .motion-divider.motion-in:after{
+    animation:none!important;
+    transform:none!important;
+  }
 }
 
-@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto} *,*:before,*:after{animation:none!important;transition:none!important} [data-reveal]{clip-path:none!important;transform:none!important}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto} *,*:before,*:after{animation:none!important;transition:none!important} [data-reveal]{animation:none!important;clip-path:none!important;transform:none!important}}
 </style>
 <script>document.documentElement.className='js';</script>
 </head>
@@ -1655,7 +1749,7 @@ select:focus-visible{
 
 <footer id="contacto" data-chapter="08 / CONTACTO">
  <div class="wrap footer-grid">
-  <div class="tag eyebrow" data-reveal>08 / Contacto</div><h2 data-reveal>Hablemos.</h2>
+  <div class="tag eyebrow" data-reveal>08 / Contacto</div><h2 data-reveal>CONTÁCTAME.</h2>
   <div class="verse"><blockquote>“Y todo lo que hagáis, hacedlo de corazón.”</blockquote><cite>Colosenses 3:23</cite></div>
   <div class="footer-links"><a href="mailto:gerardousy@gmail.com">gerardousy@gmail.com</a><a href="https://github.com/GerardoRp" target="_blank" rel="noreferrer">GitHub ↗</a><a href="CV_Gerardo_Rodriguez_Perez_2026.pdf" download>Descargar CV ↓</a><a href="https://gerardorp.github.io/" target="_blank" rel="noreferrer">Portfolio actual ↗</a></div>
   <div class="footer-bottom"><span>Gerardo Rodríguez Pérez · Naucalpan de Juárez</span><span>Portfolio / 2026</span></div>
@@ -1666,14 +1760,156 @@ select:focus-visible{
 (()=>{
  const reduceMotion=matchMedia('(prefers-reduced-motion: reduce)').matches;
  const progress=document.querySelector('.scroll-progress'), chapter=document.getElementById('chapter');
- const observed=document.querySelectorAll('[data-reveal],[data-line],.node,.arch-flow,.bi-kpi,.bi-panel,.lab-item');
+ const observed=document.querySelectorAll('[data-line]');
  const io=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.17,rootMargin:'0px 0px -7% 0px'}); observed.forEach(el=>io.observe(el));
+
+ // Robust editorial motion. Elements are fully visible before this runs.
+ const motionGroups={
+   lead:[
+     '.intro p',
+     '.experience-head',
+     '.tools-head',
+     '.method-quote',
+     '.work-index h2',
+     '.anatomy-title',
+     '.data-intro',
+     '.automation-head',
+     '.lab-head',
+     '.about-copy',
+     'footer h2'
+   ],
+   support:[
+     '.jobs',
+     '.tool-filter',
+     '.tool-list',
+     '.project-lede',
+     '.demo-banner',
+     '.bi-shell',
+     '.retail-flow',
+     '.data-context',
+     '.automation-flow',
+     '.automation-note',
+     '.lab-list',
+     '.education',
+     '.verse',
+     '.footer-links'
+   ],
+   row:[
+     '.job',
+     '.tool-row',
+     '.flow-row-light',
+     '.flow-row',
+     '.lab-item',
+     '.bi-kpi',
+     '.bi-panel'
+   ],
+   tag:['.section-grid > .tag','.experience .tag','.automation .tag','.lab .tag'],
+   side:['.tools-head p','.data-intro p','.lab-head p','.experience-head p']
+ };
+
+ const motionElements=[];
+ const seenMotion=new Set();
+ Object.entries(motionGroups).forEach(([type,selectors])=>{
+   selectors.forEach(selector=>{
+     document.querySelectorAll(selector).forEach((el,index)=>{
+       if(seenMotion.has(el))return;
+       seenMotion.add(el);
+       el.classList.add(`motion-${type}`);
+       if(type==='row') el.style.setProperty('--motion-delay',`${Math.min(index%4,3)*0.045}s`);
+       else if(type==='support') el.style.setProperty('--motion-delay','.05s');
+       else if(type==='side') el.style.setProperty('--motion-delay','.08s');
+       motionElements.push(el);
+     });
+   });
+ });
+
+ // A few structural lines get their own restrained draw animation.
+ document.querySelectorAll('.tool-filter,.method-track,.architecture,.bi-shell,.automation-flow,.lab-list')
+   .forEach(el=>el.classList.add('motion-divider'));
+
+ const motionObserver=new IntersectionObserver(entries=>{
+   entries.forEach(entry=>{
+     if(!entry.isIntersecting)return;
+     const el=entry.target;
+     // Restarting the animation is never needed; one entrance per element.
+     el.classList.add('motion-in');
+     motionObserver.unobserve(el);
+   });
+ },{
+   threshold:.08,
+   rootMargin:'0px 0px -10% 0px'
+ });
+
+ motionElements.forEach(el=>motionObserver.observe(el));
+ document.querySelectorAll('.motion-divider').forEach(el=>motionObserver.observe(el));
+
  const chapterSections=[...document.querySelectorAll('[data-chapter]')]; const chapterObserver=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting)chapter.textContent=e.target.dataset.chapter}),{rootMargin:'-42% 0px -42% 0px'}); chapterSections.forEach(s=>chapterObserver.observe(s));
- const experience=document.querySelector('.experience'), methodTrack=document.getElementById('methodTrack'), steps=[...document.querySelectorAll('.step')];
- function updateScroll(){ const max=document.documentElement.scrollHeight-innerHeight; progress.style.transform=`scaleX(${Math.max(0,Math.min(1,scrollY/Math.max(1,max)))})`;
-  if(experience){const r=experience.getBoundingClientRect(),local=Math.max(-1,Math.min(1,(r.top+r.height/2-innerHeight/2)/innerHeight));experience.style.setProperty('--xp',`${local*22}px`);experience.style.setProperty('--yp',`${local*-16}px`)}
-  if(methodTrack){const r=methodTrack.getBoundingClientRect(),start=innerHeight*.78,end=innerHeight*.25,p=Math.max(0,Math.min(1,(start-r.top)/Math.max(1,start-end)));methodTrack.style.setProperty('--method-progress',`${p*100}%`);const active=Math.min(steps.length-1,Math.floor(p*steps.length));steps.forEach((s,i)=>s.classList.toggle('active',i<=active))}
- } addEventListener('scroll',updateScroll,{passive:true});updateScroll();
+ const experience=document.querySelector('.experience');
+ const methodTrack=document.getElementById('methodTrack');
+ const steps=[...document.querySelectorAll('.step')];
+ const archFlow=document.querySelector('.arch-flow');
+ const archNodes=archFlow?[...archFlow.querySelectorAll('.node')]:[];
+
+ function clamp01(v){return Math.max(0,Math.min(1,v))}
+
+ // 0 when the top of the element reaches the lower trigger,
+ // 1 when its bottom reaches the upper trigger.
+ function flowProgress(el,startRatio=.78,endRatio=.30){
+   if(!el)return 0;
+   const r=el.getBoundingClientRect();
+   const start=innerHeight*startRatio;
+   const end=innerHeight*endRatio;
+   const travel=Math.max(1,r.height+start-end);
+   return clamp01((start-r.top)/travel);
+ }
+
+ function updateScroll(){
+   const max=document.documentElement.scrollHeight-innerHeight;
+   progress.style.transform=`scaleX(${clamp01(scrollY/Math.max(1,max))})`;
+
+   if(experience){
+     const r=experience.getBoundingClientRect();
+     const local=Math.max(-1,Math.min(1,(r.top+r.height/2-innerHeight/2)/innerHeight));
+     experience.style.setProperty('--xp',`${local*22}px`);
+     experience.style.setProperty('--yp',`${local*-16}px`);
+   }
+
+   // 03 / Cómo trabajo — continuous fill tied to scroll position.
+   if(methodTrack){
+     const p=flowProgress(methodTrack,.80,.32);
+     methodTrack.style.setProperty('--method-progress',`${(p*100).toFixed(2)}%`);
+     methodTrack.style.setProperty('--method-progress-scale',p.toFixed(4));
+     const denom=Math.max(1,steps.length-1);
+     steps.forEach((step,i)=>{
+       const threshold=i/denom;
+       step.classList.toggle('active',p>=threshold-.025);
+     });
+   }
+
+   // 05.1 / StayFlow — vertical architecture line grows as the user
+   // moves through the nodes, and each node activates as the line reaches it.
+   if(archFlow){
+     const p=flowProgress(archFlow,.82,.28);
+     archFlow.style.setProperty('--arch-progress',p.toFixed(4));
+     const flowHeight=Math.max(1,archFlow.scrollHeight);
+     archNodes.forEach(node=>{
+       const nodePoint=(node.offsetTop+14)/flowHeight;
+       node.classList.toggle('active',p>=nodePoint-.045);
+     });
+   }
+ }
+
+ let scrollFrame=0;
+ function requestScrollUpdate(){
+   if(scrollFrame)return;
+   scrollFrame=requestAnimationFrame(()=>{
+     scrollFrame=0;
+     updateScroll();
+   });
+ }
+ addEventListener('scroll',requestScrollUpdate,{passive:true});
+ addEventListener('resize',requestScrollUpdate,{passive:true});
+ updateScroll();
  // tools filter
  const fbtn=[...document.querySelectorAll('.tool-filter button')], rows=[...document.querySelectorAll('.tool-row')]; fbtn.forEach(b=>b.addEventListener('click',()=>{fbtn.forEach(x=>x.classList.toggle('active',x===b));const f=b.dataset.filter;rows.forEach(r=>{const cats=(r.dataset.cat||'').split(' ');r.classList.toggle('hidden',f!=='all'&&!cats.includes(f))})}));
  // synthetic chart
@@ -1846,16 +2082,35 @@ function renderBiTrend(){
    el.style.display=show?'':'none';
  });
 
- if(!reduceMotion&&biEls.linePath.getTotalLength){
-   [biEls.linePath,biEls.targetPath].forEach((el,index)=>{
-     const len=el.getTotalLength();
-     el.style.transition='none';
-     el.style.strokeDasharray=len;
-     el.style.strokeDashoffset=len;
-     requestAnimationFrame(()=>requestAnimationFrame(()=>{
-       el.style.transition=`stroke-dashoffset ${index===0?'.9s':'1.05s'} var(--ease)`;
-       el.style.strokeDashoffset='0';
-     }));
+ // Keep the complete geometry visible at all times.
+ // The previous draw animation overwrote the target's dashed pattern and,
+ // when ResizeObserver fired repeatedly, could leave both paths half-drawn.
+ [biEls.linePath,biEls.targetPath].forEach(el=>{
+   if(!el)return;
+   el.style.transition='';
+   el.style.strokeDasharray='';
+   el.style.strokeDashoffset='';
+ });
+
+ // Motion is now decorative only: it never changes path length or visibility.
+ if(!reduceMotion){
+   biEls.areaPath?.animate(
+     [{opacity:.25},{opacity:1}],
+     {duration:420,easing:'cubic-bezier(.2,.75,.18,1)'}
+   );
+   biEls.linePath?.animate(
+     [{opacity:.45},{opacity:1}],
+     {duration:360,easing:'cubic-bezier(.2,.75,.18,1)'}
+   );
+   biEls.targetPath?.animate(
+     [{opacity:.35},{opacity:1}],
+     {duration:420,easing:'cubic-bezier(.2,.75,.18,1)'}
+   );
+   [...biEls.linePoints.children].forEach((point,i)=>{
+     point.animate(
+       [{opacity:.3},{opacity:1}],
+       {duration:260,delay:Math.min(i*35,240),easing:'ease-out',fill:'both'}
+     );
    });
  }
 }
